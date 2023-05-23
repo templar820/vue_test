@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <PostForm
-      @create="createPost"
+
     />
     <PostList v-bind:posts="posts"/>
   </div>

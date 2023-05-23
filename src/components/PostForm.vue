@@ -13,8 +13,14 @@
   </form>
 </template>
 
-<script>
+<script lang="ts">
 export default {
+  emits:{
+    createPost(payload: { title: string, description: string }) {
+      // мидлваря получается
+      console.log(payload);
+    }
+  },
   data() {
     return {
       post: {
@@ -26,7 +32,7 @@ export default {
   methods: {
     createPost(event) {
       this.post.id = new Date().getSeconds();
-      this.$emit("create", this.post, "laslals")
+      this.$emit("createPost", this.post)
       this.post = {
         title: "",
         description: ""

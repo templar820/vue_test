@@ -1,30 +1,63 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div class="app">
+    <PostForm
+      @create="createPost"
+    />
+    <PostList v-bind:posts="posts"/>
+  </div>
 </template>
+<script>
+import PostList from "@/components/PostList.vue";
+import PostForm from "@/components/PostForm.vue";
 
+export default {
+  components: {
+    PostList,
+    PostForm,
+  },
+  data() {
+    return {
+      posts: [
+        {id: 1, title: "Title1", description: "Description1"},
+        {id: 2, title: "Title2", description: "Description2"},
+        {id: 3, title: "Title3", description: "Description3"},
+        {id: 4, title: "Title4", description: "Description4"},
+      ],
+      title: "",
+      description: "",
+    }
+  },
+
+  methods: {
+    createPost(post, desc){
+      this.posts.push(post);
+    }
+  }
+
+}
+</script>
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+* {
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0px;
 }
 
-nav {
-  padding: 30px;
+
+.app {
+  padding: 20px;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.app form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-content: center;
+  gap: 16px;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+.app input {
+  width: 100%;
+
 }
 </style>

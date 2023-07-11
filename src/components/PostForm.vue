@@ -9,14 +9,17 @@
       v-model="post.description"
       placeholder="description"
     />
-    <button>create</button>
+    <MyButton>create</MyButton>
   </form>
 </template>
 
 <script lang="ts">
+import MyButton from "@/components/UI/MyButton.vue";
+
 export default {
+  components: {MyButton},
   emits:{
-    createPost(payload: { title: string, description: string }) {
+    createPost(payload: { title: string, description: string, id: any }) {
       // мидлваря получается
       console.log(payload);
     }
@@ -30,13 +33,13 @@ export default {
     }
   },
   methods: {
-    createPost(event) {
-      this.post.id = new Date().getSeconds();
-      this.$emit("createPost", this.post)
-      this.post = {
-        title: "",
-        description: ""
-      }
+    createPost() {
+      // this.post.id = new Date().getSeconds();
+      // this.$emit("createPost", this.post)
+      // this.post = {
+      //   title: "",
+      //   description: ""
+      // }
     },
   }
 }

@@ -1,4 +1,15 @@
 const { defineConfig } = require('@vue/cli-service')
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+
 module.exports = defineConfig({
-  transpileDependencies: true
+  transpileDependencies: true,
+  configureWebpack: {
+    resolve: {
+      plugins: [
+        new TsconfigPathsPlugin({
+          configFile: "./tsconfig.json"
+        }),
+      ]
+    },
+  },
 })

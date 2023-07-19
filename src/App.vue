@@ -1,37 +1,62 @@
 <template>
   <div class="app">
-    <PostForm
-      @createPost="createPost"
+    <input
+      v-model="user.phone"
+      placeholder="phone"
     />
-    <PostList v-bind:posts="posts"/>
+<!--    <button class="brn btn-primary" @click="getCode">GET_CODE</button>-->
+    <input
+      v-model="user.code"
+      placeholder="code"
+    />
+<!--    <button class="brn btn-secondary" @click="getToken">GET_TOKEN</button>-->
+    <button class="brn btn-secondary" @click="setToken">SET_TOKEN</button>
+
   </div>
 </template>
 <script>
-import PostList from "@/components/PostList.vue";
-import PostForm from "@/components/PostForm.vue";
+import SDK, {KeStrategy} from "@market-tech/frontend-auth-sdk"
+
+
+const AuthSDK = new SDK(
+  KeStrategy.getInstance()
+    .getOptionsBuilder()
+    .setAuthEndpoint("https://api.dev.cluster.kznexpess.com/api")
+    .getStrategy()
+)
 
 export default {
-  components: {
-    PostList,
-    PostForm,
+  beforeCreate() {
+    AuthSDK.getTokenStream().subscribe(
+      (token) => {
+        console.log("TEST_APP", token)
+      }
+    )
   },
   data() {
     return {
-      posts: [
-        {id: 1, title: "Title1", description: "Description1"},
-        {id: 2, title: "Title2", description: "Description2"},
-        {id: 3, title: "Title3", description: "Description3"},
-        {id: 4, title: "Title4", description: "Description4"},
-      ],
-      title: "",
-      description: "",
+      user: {
+        phone: "9652557006",
+        code: null
+      },
     }
   },
 
   methods: {
-    createPost(post){
-      console.log(post);
-      this.posts.push(post);
+    async getCode(){
+      // try {
+      //   const data = await auth.signInByPhone(this.$data.user.phone)
+      //   console.log(data);
+      // } catch (e) {
+      //   console.log(e);
+      // }
+    },
+    async setToken(){
+      try {
+        await KeStrategy.setToken("my token: 123")
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
 

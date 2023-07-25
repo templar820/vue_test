@@ -4,7 +4,7 @@
       v-model="user.phone"
       placeholder="phone"
     />
-<!--    <button class="brn btn-primary" @click="getCode">GET_CODE</button>-->
+    <button class="brn btn-primary" @click="getCode">GET_CODE</button>
     <input
       v-model="user.code"
       placeholder="code"
@@ -21,7 +21,7 @@ import SDK, {KeStrategy} from "@market-tech/frontend-auth-sdk"
 const AuthSDK = new SDK(
   KeStrategy.getInstance()
     .getOptionsBuilder()
-    .setAuthEndpoint("https://api.dev.cluster.kznexpess.com/api")
+    .setAuthEndpoint("https://api.dev.cluster.kznexpess.com")
     .getStrategy()
 )
 
@@ -44,16 +44,16 @@ export default {
 
   methods: {
     async getCode(){
-      // try {
-      //   const data = await auth.signInByPhone(this.$data.user.phone)
-      //   console.log(data);
-      // } catch (e) {
-      //   console.log(e);
-      // }
-    },
-    async setToken(){
       try {
-        await KeStrategy.setToken("my token: 123")
+        const data = await AuthSDK.signInByPhone(this.user.phone)
+        console.log(data);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async checkAuth(){
+      try {
+        await AuthSDK.getTokenByPhoneAndSMSCode(this.user.phone, this.user.code)
       } catch (e) {
         console.log(e);
       }
